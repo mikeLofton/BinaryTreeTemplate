@@ -45,9 +45,34 @@ private:
 	/// <returns>Whether or not a node matching the value could be found</returns>
 	bool findNode(T searchValue, TreeNode<T>*& nodeFound, TreeNode<T>*& nodeParent);
 
-	void draw(TreeNode<T>*, int x, int y, int horizontalSpacing, TreeNode<T>* selected = nullptr);
+	void draw(TreeNode<T>* currentnode, int x, int y, int horizontalSpacing, TreeNode<T>* selected = nullptr);
 
 	TreeNode<T>* m_root = nullptr;
 };
 
 #endif
+
+template<typename T>
+inline void BinaryTree<T>::draw(TreeNode<T>* currentNode, int x, int y, int horizontalSpacing, TreeNode<T>* selected)
+{
+	//Decrease the horizontal space as the node
+	horizontalSpacing /= 2;
+
+	//Checks if the current node is null
+	if (currentNode)
+	{
+		if (currentNode->hasLeft())
+		{
+			DrawLine(x, y, x - horizontalSpacing, y + 80, RED);
+			draw(currentNode->getLeft(), x - horizontalSpacing, y + 80, horizontalSpacing, selected);
+		}
+
+		if (currentNode->hasRight())
+		{
+			DrawLine(x, y, x + horizontalSpacing, y + 80, RED);
+			draw(currentNode->getRight(), x + horizontalSpacing, y + 80, horizontalSpacing, selected);
+		}
+
+		currentNode->draw(x, y, (selected == currentNode));
+	}
+}
