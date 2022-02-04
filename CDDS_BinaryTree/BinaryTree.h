@@ -16,24 +16,31 @@ public:
 	/// <summary>
 	/// Returns whether or not there are any nodes in the list
 	/// </summary>
-	bool isEmpty() {} const;
+	bool isEmpty() const;
+
 	/// <summary>
 	/// Creates a new node that stores the given value and places it into the tree
 	/// </summary>
 	/// <param name="value">The new value to add to the tree</param>
-	void insert(T value) {};
+	void insert(T value);
+
 	/// <summary>
 	/// Finds the node with the given value and removes it from the tree
 	/// </summary>
 	/// <param name="value">The value of the node to search for in the tree</param>
-	void remove(T value) {};
+	void remove(T value);
+
 	/// <summary>
 	/// Finds and returns a node with the given value in the tree
 	/// </summary>
 	/// <param name="value">The value of the node to search for</param>
 	TreeNode<T>* find(T value) {return nullptr;}
 
-	void draw(TreeNode<T>* selected = nullptr) {}
+	/// <summary>
+	/// Calles the private draw function
+	/// </summary>
+	/// <param name="selected"></param>
+	void draw(TreeNode<T>* selected = nullptr);
 
 private:
 	/// <summary>
@@ -53,6 +60,39 @@ private:
 #endif
 
 template<typename T>
+inline bool BinaryTree<T>::isEmpty() const
+{
+	return false;
+}
+
+template<typename T>
+inline void BinaryTree<T>::insert(T value)
+{
+	TreeNode<T>* newNode = new TreeNode<T>(value);
+	
+	if (newNode->getData() < m_root->getData())
+	{
+
+	}
+
+	if (newNode->getData() > m_root->getData())
+	{
+
+	}
+}
+
+template<typename T>
+inline void BinaryTree<T>::remove(T value)
+{
+}
+
+template<typename T>
+inline void BinaryTree<T>::draw(TreeNode<T>* selected)
+{
+	draw(m_root, 400, 40, 400, selected);
+}
+
+template<typename T>
 inline void BinaryTree<T>::draw(TreeNode<T>* currentNode, int x, int y, int horizontalSpacing, TreeNode<T>* selected)
 {
 	//Decrease the horizontal space as the node
@@ -61,18 +101,24 @@ inline void BinaryTree<T>::draw(TreeNode<T>* currentNode, int x, int y, int hori
 	//Checks if the current node is null
 	if (currentNode)
 	{
+		//Draws the left child if this node has one
 		if (currentNode->hasLeft())
 		{
+			//Draws a line between the left child and the current one
 			DrawLine(x, y, x - horizontalSpacing, y + 80, RED);
+			//Draws the left child
 			draw(currentNode->getLeft(), x - horizontalSpacing, y + 80, horizontalSpacing, selected);
 		}
 
+		//Draws the right child if this node has one
 		if (currentNode->hasRight())
 		{
+			//Draws a line between this child and the current node
 			DrawLine(x, y, x + horizontalSpacing, y + 80, RED);
+			//Draws the right child
 			draw(currentNode->getRight(), x + horizontalSpacing, y + 80, horizontalSpacing, selected);
 		}
-
+		//Draws the current node
 		currentNode->draw(x, y, (selected == currentNode));
 	}
 }

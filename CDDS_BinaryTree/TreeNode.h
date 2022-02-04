@@ -4,7 +4,7 @@ template<typename T>
 class TreeNode
 {
 public:
-	TreeNode() {};
+	TreeNode();
 	TreeNode(T value);
 	~TreeNode() {};
 
@@ -94,9 +94,17 @@ inline void TreeNode<T>::draw(int x, int y, bool selected)
 }
 
 template<typename T>
+inline TreeNode<T>::TreeNode()
+{
+	m_value = 0;
+	m_left = nullptr;
+	m_right = nullptr;
+}
+
+template<typename T>
 inline TreeNode<T>::TreeNode(T value)
 {
-	m_value = value
+	m_value = value;
 }
 
 template<typename T>
