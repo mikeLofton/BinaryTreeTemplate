@@ -80,17 +80,20 @@ inline void BinaryTree<T>::insert(T value)
 	}
 
 	currentNode = m_root;
-	
-	if (newNode->getData() < currentNode->getData() && currentNode->hasLeft() == false)
-	{
-		currentNode->setLeft(newNode);
-	}
 
-	if (newNode->getData() > currentNode->getData() && currentNode->hasRight() == false)
+	while ()
 	{
-		currentNode->setRight(newNode);
+		if (newNode->getData() < currentNode->getData())
+		{
+			currentNode->setLeft(newNode);
+			currentNode = currentNode->getLeft();
+		}
+		else if (newNode->getData() > currentNode->getData())
+		{
+			currentNode->setRight(newNode);
+			currentNode = currentNode->getRight();
+		}
 	}
-	
 }
 
 template<typename T>
@@ -104,17 +107,26 @@ inline TreeNode<T>* BinaryTree<T>::find(T value)
 	TreeNode<T>* currentNode = new TreeNode<T>();
 	currentNode = m_root;
 
-	while (currentNode->getData() != value)
-	{
-		if (currentNode->hasLeft() || currentNode->hasRight())
-		{
-
-		}
-	}
-
-	if (currentNode->getData() == value)
+	if (isEmpty())
 	{
 		return currentNode;
+	}
+
+	while (currentNode != nullptr)
+	{
+		if (value < currentNode->getData())
+		{
+			currentNode = currentNode->getLeft();
+		}
+		else if (value > currentNode->getData())
+		{
+			currentNode = currentNode->getRight();
+		}
+		else
+		{
+			return currentNode;
+			break;
+		}
 	}
 	
 }
