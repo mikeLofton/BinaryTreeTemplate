@@ -34,7 +34,7 @@ public:
 	/// Finds and returns a node with the given value in the tree
 	/// </summary>
 	/// <param name="value">The value of the node to search for</param>
-	TreeNode<T>* find(T value) {return nullptr;}
+	TreeNode<T>* find(T value);
 
 	/// <summary>
 	/// Calles the private draw function
@@ -62,28 +62,61 @@ private:
 template<typename T>
 inline bool BinaryTree<T>::isEmpty() const
 {
-	return false;
+	if (m_root == nullptr)
+		return true;
+	else
+		return false;
 }
 
 template<typename T>
 inline void BinaryTree<T>::insert(T value)
 {
 	TreeNode<T>* newNode = new TreeNode<T>(value);
+	TreeNode<T>* currentNode = new TreeNode<T>();
 	
-	if (newNode->getData() < m_root->getData())
+	if (isEmpty())
 	{
-
+		m_root = newNode;
 	}
 
-	if (newNode->getData() > m_root->getData())
+	currentNode = m_root;
+	
+	if (newNode->getData() < currentNode->getData() && currentNode->hasLeft() == false)
 	{
-
+		currentNode->setLeft(newNode);
 	}
+
+	if (newNode->getData() > currentNode->getData() && currentNode->hasRight() == false)
+	{
+		currentNode->setRight(newNode);
+	}
+	
 }
 
 template<typename T>
 inline void BinaryTree<T>::remove(T value)
 {
+}
+
+template<typename T>
+inline TreeNode<T>* BinaryTree<T>::find(T value)
+{
+	TreeNode<T>* currentNode = new TreeNode<T>();
+	currentNode = m_root;
+
+	while (currentNode->getData() != value)
+	{
+		if (currentNode->hasLeft() || currentNode->hasRight())
+		{
+
+		}
+	}
+
+	if (currentNode->getData() == value)
+	{
+		return currentNode;
+	}
+	
 }
 
 template<typename T>
