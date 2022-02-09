@@ -117,7 +117,35 @@ inline void BinaryTree<T>::insert(T value)
 template<typename T>
 inline void BinaryTree<T>::remove(T value)
 {
-	
+	bool nodeRemoved = false;
+	TreeNode<T>* nodeToRemove = new TreeNode<T>();
+	TreeNode<T>* parentNode = new TreeNode<T>();
+
+	if (isEmpty())
+	{
+		nodeRemoved = true;
+	}
+
+	while (!nodeRemoved)
+	{
+		findNode(value, nodeToRemove, parentNode);
+
+		if (!nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
+		{
+			if (nodeToRemove == parentNode->getLeft())
+			{
+				parentNode->setLeft(nullptr);
+			}
+
+			if (nodeToRemove == parentNode->getRight())
+			{
+				parentNode->setRight(nullptr);
+			}
+
+			delete nodeToRemove;
+			nodeRemoved = true;
+		}
+	}
 }
 
 template<typename T>
