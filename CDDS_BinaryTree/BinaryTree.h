@@ -169,10 +169,12 @@ inline bool BinaryTree<T>::findNode(T searchValue, TreeNode<T>*& nodeFound, Tree
 	{
 		if (searchValue < currentNode->getData())
 		{
+			nodeParent = currentNode;
 			currentNode = currentNode->getLeft();
 		}
 		else if (searchValue > currentNode->getData())
 		{
+			nodeParent = currentNode;
 			currentNode = currentNode->getRight();
 		}
 		else if (searchValue == currentNode->getData())
