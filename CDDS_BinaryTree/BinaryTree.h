@@ -71,27 +71,45 @@ inline bool BinaryTree<T>::isEmpty() const
 template<typename T>
 inline void BinaryTree<T>::insert(T value)
 {
+	bool inserted = false;
 	TreeNode<T>* newNode = new TreeNode<T>(value);
 	TreeNode<T>* currentNode = new TreeNode<T>();
 	
 	if (isEmpty())
 	{
 		m_root = newNode;
+		inserted = true;
 	}
 
 	currentNode = m_root;
 
-	while ()
+	while (!inserted)
 	{
-		if (newNode->getData() < currentNode->getData())
+		if (newNode->getData() > currentNode->getData())
 		{
-			currentNode->setLeft(newNode);
-			currentNode = currentNode->getLeft();
+			if (currentNode->hasRight())
+			{
+				currentNode = currentNode->getRight();
+			}
+
+			if (!currentNode->hasRight() && newNode->getData() > currentNode->getData())
+			{
+				currentNode->setRight(newNode);
+				inserted = true;
+			}
 		}
-		else if (newNode->getData() > currentNode->getData())
+		else if (newNode->getData() < currentNode->getData())
 		{
-			currentNode->setRight(newNode);
-			currentNode = currentNode->getRight();
+			if (currentNode->hasLeft())
+			{
+				currentNode = currentNode->getLeft();
+			}
+
+			if (!currentNode->hasLeft() && newNode->getData() < currentNode->getData())
+			{
+				currentNode->setLeft(newNode);
+				inserted = true;
+			}	
 		}
 	}
 }
