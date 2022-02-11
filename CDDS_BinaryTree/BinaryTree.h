@@ -119,9 +119,18 @@ inline void BinaryTree<T>::remove(T value)
 {
 	TreeNode<T>* nodeToRemove = new TreeNode<T>();
 	TreeNode<T>* parentNode = new TreeNode<T>();
+	TreeNode<T>* currentNode = new TreeNode<T>();
 	
 	findNode(value, nodeToRemove, parentNode);
 
+	//If node to remove is the root
+	if (nodeToRemove == m_root && !nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
+	{
+	 
+		m_root = nullptr;
+	}
+
+		//For Deleting a leaf with no children
 		if (!nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
 		{
 			if (nodeToRemove == parentNode->getLeft())
@@ -137,14 +146,15 @@ inline void BinaryTree<T>::remove(T value)
 			delete nodeToRemove;
 		}
 
+		//For Deleting a leaf that has a left child but no right child
 		if (nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
 		{
-			if (nodeToRemove == parentNode->getLeft() && nodeToRemove->hasLeft());
+			if (nodeToRemove == parentNode->getLeft() && nodeToRemove->hasLeft())
 			{
 				parentNode->setLeft(nodeToRemove->getLeft());
 			}
 
-			if (nodeToRemove == parentNode->getRight() && nodeToRemove->hasLeft());
+			if (nodeToRemove == parentNode->getRight() && nodeToRemove->hasLeft())
 			{
 				parentNode->setRight(nodeToRemove->getLeft());
 			}
@@ -152,19 +162,67 @@ inline void BinaryTree<T>::remove(T value)
 			delete nodeToRemove;
 		}
 
+		//For Deleting a leaf that has a right child but no left child
 		if (nodeToRemove->hasRight() && !nodeToRemove->hasLeft())
 		{
-			if (nodeToRemove == parentNode->getLeft() && nodeToRemove->hasRight());
+			if (nodeToRemove == parentNode->getLeft() && nodeToRemove->hasRight())
 			{
 				parentNode->setLeft(nodeToRemove->getRight());
 			}
 
-			if (nodeToRemove == parentNode->getRight() && nodeToRemove->hasRight());
+			if (nodeToRemove == parentNode->getRight() && nodeToRemove->hasRight())
 			{
 				parentNode->setRight(nodeToRemove->getRight());
 			}
 
 			delete nodeToRemove;
+		}
+
+		//For Deleting a leaf with two children
+		if (nodeToRemove->hasLeft() && nodeToRemove->hasRight())
+		{
+			currentNode = nodeToRemove->getRight();
+
+			if (currentNode->hasLeft())
+			{
+				parentNode = currentNode;
+				bool lowestFound = false;
+
+				while (!lowestFound)
+				{
+					if (parentNode->getLeft()->hasLeft())
+					{
+						parentNode = parentNode->getLeft();
+					}
+					else 
+					{
+						currentNode = parentNode->getLeft();
+						lowestFound = true;
+					}
+				}
+
+				nodeToRemove->setData(currentNode->getData());
+				parentNode->setLeft(currentNode->getRight());
+
+				delete currentNode;
+			}
+			else
+			{
+				currentNode = nodeToRemove->getLeft();
+
+				nodeToRemove->setData(currentNode->getData());
+
+				if (currentNode->hasLeft())
+				{
+					nodeToRemove->setLeft(currentNode->getLeft());
+				}
+				else
+				{
+					nodeToRemove->setLeft(nullptr);
+				}
+				
+				delete currentNode;
+			}
 		}
 	
 }
