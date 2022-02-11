@@ -126,7 +126,7 @@ inline void BinaryTree<T>::remove(T value)
 	//If node to remove is the root
 	if (nodeToRemove == m_root && !nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
 	{
-	 
+		delete nodeToRemove;
 		m_root = nullptr;
 	}
 
@@ -179,7 +179,7 @@ inline void BinaryTree<T>::remove(T value)
 		}
 
 		//For Deleting a leaf with two children
-		if (nodeToRemove->hasLeft() && nodeToRemove->hasRight())
+		if (nodeToRemove->hasLeft() && nodeToRemove->hasRight() && !isEmpty())
 		{
 			currentNode = nodeToRemove->getRight();
 
