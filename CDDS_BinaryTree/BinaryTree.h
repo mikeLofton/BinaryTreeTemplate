@@ -74,6 +74,8 @@ inline void BinaryTree<T>::insert(T value)
 	bool inserted = false;
 	TreeNode<T>* newNode = new TreeNode<T>(value);
 	TreeNode<T>* currentNode = new TreeNode<T>();
+	TreeNode<T>* nodeToFind = new TreeNode<T>();
+	TreeNode<T>* parentNode = new TreeNode<T>();
 	
 	if (isEmpty())
 	{
@@ -83,9 +85,15 @@ inline void BinaryTree<T>::insert(T value)
 
 	currentNode = m_root;
 
+	findNode(value, nodeToFind, parentNode);
+
 	while (!inserted)
 	{
-		if (newNode->getData() > currentNode->getData())
+		if (newNode->getData() == nodeToFind->getData())
+		{
+			break;
+		}
+		else if (newNode->getData() > currentNode->getData())
 		{
 			if (currentNode->hasRight())
 			{
@@ -124,11 +132,17 @@ inline void BinaryTree<T>::remove(T value)
 	findNode(value, nodeToRemove, parentNode);
 
 	//If node to remove is the root
-	if (nodeToRemove == m_root && !nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
+	/*if (nodeToRemove == m_root && !nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
 	{
 		delete nodeToRemove;
 		m_root = nullptr;
 	}
+	else if (nodeToRemove == m_root && nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
+	{
+		currentNode = nodeToRemove->getLeft();
+		delete nodeToRemove;
+		m_root = currentNode;
+	}*/
 
 		//For Deleting a leaf with no children
 		if (!nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
@@ -144,10 +158,14 @@ inline void BinaryTree<T>::remove(T value)
 			}
 
 			delete nodeToRemove;
+
+			//If you removed the root set the root to null pointer
+			if (nodeToRemove == m_root)
+				m_root = nullptr;
 		}
 
 		//For Deleting a leaf that has a left child but no right child
-		if (nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
+		else if (nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
 		{
 			if (nodeToRemove == parentNode->getLeft() && nodeToRemove->hasLeft())
 			{
@@ -159,11 +177,17 @@ inline void BinaryTree<T>::remove(T value)
 				parentNode->setRight(nodeToRemove->getLeft());
 			}
 
+			//If you're removing the root set the root to be its left
+			if (nodeToRemove == m_root)
+			{
+				m_root = nodeToRemove->getLeft();
+			}
+
 			delete nodeToRemove;
 		}
 
 		//For Deleting a leaf that has a right child but no left child
-		if (nodeToRemove->hasRight() && !nodeToRemove->hasLeft())
+		else if (nodeToRemove->hasRight() && !nodeToRemove->hasLeft())
 		{
 			if (nodeToRemove == parentNode->getLeft() && nodeToRemove->hasRight())
 			{
@@ -175,11 +199,17 @@ inline void BinaryTree<T>::remove(T value)
 				parentNode->setRight(nodeToRemove->getRight());
 			}
 
+			//If you're removing the root set the root to be its right
+			if (nodeToRemove == m_root)
+			{
+				m_root = nodeToRemove->getRight();
+			}
+
 			delete nodeToRemove;
 		}
 
 		//For Deleting a leaf with two children
-		if (nodeToRemove->hasLeft() && nodeToRemove->hasRight() && !isEmpty())
+		else if (nodeToRemove->hasLeft() && nodeToRemove->hasRight() && !isEmpty())
 		{
 			currentNode = nodeToRemove->getRight();
 
