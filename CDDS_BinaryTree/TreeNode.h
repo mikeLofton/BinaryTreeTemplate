@@ -12,6 +12,7 @@ public:
 	/// Returns whether or not this node has a left child
 	/// </summary>
 	bool hasLeft();
+
 	/// <summary>
 	/// Returns whether or not this node has a right child
 	/// </summary>
@@ -109,8 +110,8 @@ inline TreeNode<T>::TreeNode(T value)
 template<typename T>
 inline bool TreeNode<T>::hasLeft()
 {
-	if (getLeft() != nullptr)
-		return true;
+	if (getLeft() != nullptr) //If left does not equal null
+		return true;	//Return true
 	else
 		return false;
 }
@@ -118,8 +119,8 @@ inline bool TreeNode<T>::hasLeft()
 template<typename T>
 inline bool TreeNode<T>::hasRight()
 {
-	if (getRight() != nullptr)
-		return true;
+	if (getRight() != nullptr) //If right does not equal null
+		return true;	//Return true
 	else
 		return false;
 }

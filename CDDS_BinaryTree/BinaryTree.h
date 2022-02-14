@@ -62,8 +62,8 @@ private:
 template<typename T>
 inline bool BinaryTree<T>::isEmpty() const
 {
-	if (m_root == nullptr)
-		return true;
+	if (m_root == nullptr) //if the root equals null pointer
+		return true;	//Return true
 	else
 		return false;
 }
@@ -72,50 +72,53 @@ template<typename T>
 inline void BinaryTree<T>::insert(T value)
 {
 	bool inserted = false;
-	TreeNode<T>* newNode = new TreeNode<T>(value);
-	TreeNode<T>* currentNode = new TreeNode<T>();
-	TreeNode<T>* nodeToFind = new TreeNode<T>();
-	TreeNode<T>* parentNode = new TreeNode<T>();
+	TreeNode<T>* newNode = new TreeNode<T>(value); //The node you're inserting
+	TreeNode<T>* currentNode = new TreeNode<T>(); //The current node you're checking
+	TreeNode<T>* nodeToFind = new TreeNode<T>(); //The node you want to find
+	TreeNode<T>* parentNode = new TreeNode<T>(); //The parent of the node to find
 	
-	if (isEmpty())
+	if (isEmpty()) //If the tree is empty
 	{
-		m_root = newNode;
-		inserted = true;
+		m_root = newNode; //Set root to newNode
+		inserted = true; //Set inserted to true
 	}
 
-	currentNode = m_root;
+	currentNode = m_root; //Set currentNode to root
 
-	findNode(value, nodeToFind, parentNode);
+	findNode(value, nodeToFind, parentNode); //Looks for a node with the given value
 
 	while (!inserted)
 	{
+		//If the newNode's data equal the data of a node thats already in the tree
 		if (newNode->getData() == nodeToFind->getData())
 		{
-			break;
+			break; //Break out the loop
 		}
+		//If the new node's data is greater than the current node's data
 		else if (newNode->getData() > currentNode->getData())
 		{
-			if (currentNode->hasRight())
+			if (currentNode->hasRight()) //If the current node has a right node
 			{
-				currentNode = currentNode->getRight();
+				currentNode = currentNode->getRight(); //Set current node to its right
 			}
-
+			//If current node does not have a right
 			if (!currentNode->hasRight() && newNode->getData() > currentNode->getData())
 			{
-				currentNode->setRight(newNode);
+				currentNode->setRight(newNode); //Set newNode to be current node's right
 				inserted = true;
 			}
 		}
+		//If the node's data is less than the current node's data
 		else if (newNode->getData() < currentNode->getData())
 		{
-			if (currentNode->hasLeft())
+			if (currentNode->hasLeft()) //If the current node has a left
 			{
-				currentNode = currentNode->getLeft();
+				currentNode = currentNode->getLeft(); //Set current node to its left
 			}
-
+			//If the current node does not have a left 
 			if (!currentNode->hasLeft() && newNode->getData() < currentNode->getData())
 			{
-				currentNode->setLeft(newNode);
+				currentNode->setLeft(newNode); //Set new node to be current node's left
 				inserted = true;
 			}	
 		}
