@@ -10,7 +10,7 @@ class BinaryTree
 {
 public:
 
-	BinaryTree() {};
+	BinaryTree() { m_root = nullptr; }
 	~BinaryTree() {};
 
 	/// <summary>
