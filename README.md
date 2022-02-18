@@ -4,7 +4,9 @@ Asessment 4
 This program is meant to showcase a Binary Tree
 
 # How To Open Program
-
+* Download and extract the Buildv1.0 zip file.
+* Within the extracted folder you'll find a file called CDDS_BinaryTree.exe.
+* Double click the .exe to run the program
 # Functionality
 * Compares nodes to the root and places them on the tree respectively
 # Controls
