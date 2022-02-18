@@ -30,7 +30,8 @@ BinaryTreeTemplate
 
 # II. Design
  1. *System Architecture*
-
+    
+    TreeNode.h has no includes. TreeNode is a templeted class. TreeNodes are able to hold data, check if that have a left or right node, as well as grab their left or right node. TreeNode contains funtions that can set its left or right node and set its data. BinaryTree.h contains two templeted classes, A blank TreeNode class and the BinaryTree class. BinaryTree contains logic for inserting, removing, and finding nodes in the tree. TreeNode also draws the lines between nodes. main.cpp contains the logic that draws the program's user interface. 
  2. *Object Information*
     * **File Name:** main.cpp
         * Name: main(int argc, char* argv[])
