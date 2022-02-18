@@ -42,7 +42,7 @@ public:
 	TreeNode<T>* find(T value);
 
 	/// <summary>
-	/// Calles the private draw function
+	/// Calls the private draw function
 	/// </summary>
 	void draw(TreeNode<T>* selected = nullptr);
 
