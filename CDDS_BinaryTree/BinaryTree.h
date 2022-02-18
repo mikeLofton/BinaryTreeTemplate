@@ -10,7 +10,12 @@ class BinaryTree
 {
 public:
 
+	/// <summary>
+	/// Constructor
+	/// </summary>
 	BinaryTree() { m_root = nullptr; }
+
+	///Destructor
 	~BinaryTree() {};
 
 	/// <summary>
@@ -39,7 +44,6 @@ public:
 	/// <summary>
 	/// Calles the private draw function
 	/// </summary>
-	/// <param name="selected"></param>
 	void draw(TreeNode<T>* selected = nullptr);
 
 private:
@@ -128,26 +132,26 @@ inline void BinaryTree<T>::insert(T value)
 template<typename T>
 inline void BinaryTree<T>::remove(T value)
 {
-	TreeNode<T>* nodeToRemove = new TreeNode<T>();
-	TreeNode<T>* parentNode = new TreeNode<T>();
-	TreeNode<T>* currentNode = new TreeNode<T>();
+	TreeNode<T>* nodeToRemove = new TreeNode<T>(); //The node you're trying to remove
+	TreeNode<T>* parentNode = new TreeNode<T>(); //The nodeToRemove's parent
+	TreeNode<T>* currentNode = new TreeNode<T>(); //Node to keep track of the current node
 	
-	findNode(value, nodeToRemove, parentNode);
+	findNode(value, nodeToRemove, parentNode); //Finds the node you're trying to remove and its parent
 
 		//For Deleting a leaf with no children
-		if (!nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
+		if (!nodeToRemove->hasLeft() && !nodeToRemove->hasRight()) //If nTR doesn't have a left and doesn't have a right
 		{
-			if (nodeToRemove == parentNode->getLeft())
+			if (nodeToRemove == parentNode->getLeft()) //If nTR equals the parent node's left
 			{
-				parentNode->setLeft(nullptr);
+				parentNode->setLeft(nullptr); //Set parent node's left to null
 			}
 
-			if (nodeToRemove == parentNode->getRight())
+			if (nodeToRemove == parentNode->getRight()) //If nTR equals parent node's right
 			{
-				parentNode->setRight(nullptr);
+				parentNode->setRight(nullptr); //Set parent node's right to null
 			}
 
-			delete nodeToRemove;
+			delete nodeToRemove; //Delete the node 
 
 			//If you removed the root set the root to null pointer
 			if (nodeToRemove == m_root)
@@ -155,16 +159,16 @@ inline void BinaryTree<T>::remove(T value)
 		}
 
 		//For Deleting a leaf that has a left child but no right child
-		else if (nodeToRemove->hasLeft() && !nodeToRemove->hasRight())
+		else if (nodeToRemove->hasLeft() && !nodeToRemove->hasRight()) //If nTR has a left but doesn't have a right
 		{
-			if (nodeToRemove == parentNode->getLeft() && nodeToRemove->hasLeft())
+			if (nodeToRemove == parentNode->getLeft() && nodeToRemove->hasLeft()) //If nTR equals the parent's left and nTR has a left
 			{
-				parentNode->setLeft(nodeToRemove->getLeft());
+				parentNode->setLeft(nodeToRemove->getLeft()); //Set the parent's left to be nTR's left
 			}
 
-			if (nodeToRemove == parentNode->getRight() && nodeToRemove->hasLeft())
+			if (nodeToRemove == parentNode->getRight() && nodeToRemove->hasLeft()) //If nTR equals the parent's right and nTR has a right
 			{
-				parentNode->setRight(nodeToRemove->getLeft());
+				parentNode->setRight(nodeToRemove->getLeft()); //Set the parent's right to nTR's left
 			}
 
 			//If you're removing the root set the root to be its left
@@ -173,20 +177,20 @@ inline void BinaryTree<T>::remove(T value)
 				m_root = nodeToRemove->getLeft();
 			}
 
-			delete nodeToRemove;
+			delete nodeToRemove; //Delete the node
 		}
 
 		//For Deleting a leaf that has a right child but no left child
-		else if (nodeToRemove->hasRight() && !nodeToRemove->hasLeft())
+		else if (nodeToRemove->hasRight() && !nodeToRemove->hasLeft()) //If nTR has a right and doesn't have a left
 		{
-			if (nodeToRemove == parentNode->getLeft() && nodeToRemove->hasRight())
+			if (nodeToRemove == parentNode->getLeft() && nodeToRemove->hasRight()) //If nTR equals the parent node's left and nTR has a right
 			{
-				parentNode->setLeft(nodeToRemove->getRight());
+				parentNode->setLeft(nodeToRemove->getRight()); //Set the parent node's left to nTR's right
 			}
 
-			if (nodeToRemove == parentNode->getRight() && nodeToRemove->hasRight())
+			if (nodeToRemove == parentNode->getRight() && nodeToRemove->hasRight()) //If nTR equals the parent node's right and nTR has a right
 			{
-				parentNode->setRight(nodeToRemove->getRight());
+				parentNode->setRight(nodeToRemove->getRight()); //Set the parent node's right to nTR's right
 			}
 
 			//If you're removing the root set the root to be its right
@@ -195,53 +199,53 @@ inline void BinaryTree<T>::remove(T value)
 				m_root = nodeToRemove->getRight();
 			}
 
-			delete nodeToRemove;
+			delete nodeToRemove; //Delete the node
 		}
 
 		//For Deleting a leaf with two children
-		else if (nodeToRemove->hasLeft() && nodeToRemove->hasRight() && !isEmpty())
+		else if (nodeToRemove->hasLeft() && nodeToRemove->hasRight() && !isEmpty()) //If nTR has a left and a right
 		{
-			currentNode = nodeToRemove->getRight();
+			currentNode = nodeToRemove->getRight(); //Set currentNode to nTR's right
 
-			if (currentNode->hasLeft())
+			if (currentNode->hasLeft()) //If the current node has a left
 			{
-				parentNode = currentNode;
-				bool lowestFound = false;
+				parentNode = currentNode; //Set parent node to current node
+				bool lowestFound = false; //lowest found equals false
 
-				while (!lowestFound)
+				while (!lowestFound) //While the lowest is not found
 				{
-					if (parentNode->getLeft()->hasLeft())
+					if (parentNode->getLeft()->hasLeft()) //If the parent node's left has a left
 					{
-						parentNode = parentNode->getLeft();
+						parentNode = parentNode->getLeft(); //Set parent node to equal its left
 					}
 					else 
 					{
-						currentNode = parentNode->getLeft();
-						lowestFound = true;
+						currentNode = parentNode->getLeft(); //Set current node to the parent's left
+						lowestFound = true; //lowest found equals true
 					}
 				}
 
-				nodeToRemove->setData(currentNode->getData());
-				parentNode->setLeft(currentNode->getRight());
+				nodeToRemove->setData(currentNode->getData()); //Set nTR's data to current node's data
+				parentNode->setLeft(currentNode->getRight()); //Set parent node's left to current node's right
 
-				delete currentNode;
+				delete currentNode; //Delete current node
 			}
 			else
 			{
-				currentNode = nodeToRemove->getLeft();
+				currentNode = nodeToRemove->getLeft(); //Set current node to equal nTR's left
 
-				nodeToRemove->setData(currentNode->getData());
+				nodeToRemove->setData(currentNode->getData()); //Set nTR's data to current node's data
 
-				if (currentNode->hasLeft())
+				if (currentNode->hasLeft()) //If the current node has a left
 				{
-					nodeToRemove->setLeft(currentNode->getLeft());
+					nodeToRemove->setLeft(currentNode->getLeft()); //Set nTR's left to current node's left
 				}
 				else
 				{
-					nodeToRemove->setLeft(nullptr);
+					nodeToRemove->setLeft(nullptr); //Set nTR's left to null
 				}
 				
-				delete currentNode;
+				delete currentNode; //Delete the current node
 			}
 		}
 	
@@ -250,28 +254,29 @@ inline void BinaryTree<T>::remove(T value)
 template<typename T>
 inline TreeNode<T>* BinaryTree<T>::find(T value)
 {
-	TreeNode<T>* currentNode = new TreeNode<T>();
-	currentNode = m_root;
+	TreeNode<T>* currentNode = new TreeNode<T>(); //Create a node that tracks the current node
+	currentNode = m_root; //Set current node to the root
 
+	//If the tree is empty return the current node
 	if (isEmpty())
 	{
 		return currentNode;
 	}
 
-	while (currentNode != nullptr)
+	while (currentNode != nullptr) //While the current node doesn't equal null
 	{
-		if (value < currentNode->getData())
+		if (value < currentNode->getData()) //If the value is less than the current node's data
 		{
-			currentNode = currentNode->getLeft();
+			currentNode = currentNode->getLeft(); //Set current node to current's left
 		}
-		else if (value > currentNode->getData())
+		else if (value > currentNode->getData()) //If value is greater than the current node's data
 		{
-			currentNode = currentNode->getRight();
+			currentNode = currentNode->getRight(); //Set current node to current's right
 		}
 		else
 		{
-			return currentNode;
-			break;
+			return currentNode; //Return current node
+			break; //Break out the loop
 		}
 	}
 	
@@ -286,34 +291,35 @@ inline void BinaryTree<T>::draw(TreeNode<T>* selected)
 template<typename T>
 inline bool BinaryTree<T>::findNode(T searchValue, TreeNode<T>*& nodeFound, TreeNode<T>*& nodeParent)
 {
-	TreeNode<T>* currentNode = new TreeNode<T>();
-	currentNode = m_root;
+	TreeNode<T>* currentNode = new TreeNode<T>(); //Create a node that tracks the current node
+	currentNode = m_root; //Set the current node to root
 
-	if (isEmpty())
+	//If the tree is empty return false
+	if (isEmpty()) 
 		return false;
 
-	while (currentNode != nullptr)
+	while (currentNode != nullptr) //While the current node is not null
 	{
-		if (searchValue < currentNode->getData())
+		if (searchValue < currentNode->getData()) //If the value is less than the current node's data
 		{
-			nodeParent = currentNode;
-			currentNode = currentNode->getLeft();
+			nodeParent = currentNode; //Set node parent to current node
+			currentNode = currentNode->getLeft(); //Current node equals its left
 		}
-		else if (searchValue > currentNode->getData())
+		else if (searchValue > currentNode->getData()) //If the value is greater than the current node's data
 		{
-			nodeParent = currentNode;
-			currentNode = currentNode->getRight();
+			nodeParent = currentNode; //Set node parent to current node
+			currentNode = currentNode->getRight(); //Current node equals its right
 		}
-		else if (searchValue == currentNode->getData())
+		else if (searchValue == currentNode->getData()) //If the value equal the current node's data
 		{
-			nodeFound = currentNode;
-			return true;
-			break;
+			nodeFound = currentNode; //Node found equals current node
+			return true; //Return true
+			break; //Break out the loop
 		}
 		else
 		{
-			return false;
-			break;
+			return false; //Return false
+			break; //Break out the loop
 		}
 	}
 }

@@ -4,8 +4,19 @@ template<typename T>
 class TreeNode
 {
 public:
+
+	/// <summary>
+	/// Base Constructor
+	/// </summary>
 	TreeNode();
+
+	/// <summary>
+	/// Sets the tree node's value to the given value
+	/// </summary>
+	/// <param name="value">The given value</param>
 	TreeNode(T value);
+
+	///Destructor
 	~TreeNode() {};
 
 	/// <summary>
