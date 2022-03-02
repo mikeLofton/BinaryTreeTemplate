@@ -16,7 +16,7 @@ public:
 	BinaryTree() { m_root = nullptr; }
 
 	///Destructor
-	~BinaryTree() {};
+	~BinaryTree();
 
 	/// <summary>
 	/// Returns whether or not there are any nodes in the list
@@ -62,6 +62,15 @@ private:
 };
 
 #endif
+
+template<typename T>
+inline BinaryTree<T>::~BinaryTree()
+{
+	while (!isEmpty())
+	{
+		remove(m_root->getData());
+	}
+}
 
 template<typename T>
 inline bool BinaryTree<T>::isEmpty() const
